@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Autowired
     private UserMapper userMapper;
-    public User findUserById(Integer id){
+    public User findUserById(int id){
         User user = null;
         try {
             user = userMapper.findUserById(id);
