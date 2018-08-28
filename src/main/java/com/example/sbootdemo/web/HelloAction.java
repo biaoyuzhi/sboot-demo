@@ -5,6 +5,7 @@ import com.example.sbootdemo.pojo.User;
 import com.example.sbootdemo.service.QueueService;
 import com.example.sbootdemo.service.UserService;
 import com.example.sbootdemo.util.AuthUtils;
+import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -33,11 +34,15 @@ public class HelloAction {
     private UserService userService;
     @Autowired
     private QueueService queueService;
+    @Autowired
+    private StringEncryptor stringEncryptor;
 
     @GetMapping("/hello")
     public User index() {
         System.out.println("+++++++++++" + port);
         User user = userService.findUserById(1);
+        String encrypt = stringEncryptor.encrypt("root");
+        System.err.println(encrypt);
         return user;
     }
 
