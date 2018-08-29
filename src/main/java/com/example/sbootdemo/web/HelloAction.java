@@ -3,6 +3,7 @@ package com.example.sbootdemo.web;
 import com.alibaba.fastjson.JSONObject;
 import com.example.sbootdemo.pojo.User;
 import com.example.sbootdemo.service.QueueService;
+import com.example.sbootdemo.service.TestService;
 import com.example.sbootdemo.service.UserService;
 import com.example.sbootdemo.util.AuthUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,20 @@ public class HelloAction {
     private UserService userService;
     @Autowired
     private QueueService queueService;
+    @Autowired
+    private TestService testService;
 
     @GetMapping("/hello")
     public User index() {
         System.out.println("+++++++++++" + port);
         User user = userService.findUserById(1);
         return user;
+    }
+
+    @GetMapping("/add")
+    public void add() {
+        //测试数据库中的sex字段为tinyint类型，这里将String类型的sex属性插入数据库，运行正常
+        testService.add(2,"1");
     }
 
     @GetMapping("/getQueue")
