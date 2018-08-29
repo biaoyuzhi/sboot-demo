@@ -6,15 +6,19 @@ import com.example.sbootdemo.service.QueueService;
 import com.example.sbootdemo.service.TestService;
 import com.example.sbootdemo.service.UserService;
 import com.example.sbootdemo.util.AuthUtils;
+import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
 
 /**
@@ -33,11 +37,15 @@ public class HelloAction {
     private QueueService queueService;
     @Autowired
     private TestService testService;
+    @Autowired
+    private StringEncryptor stringEncryptor;
 
     @GetMapping("/hello")
     public User index() {
         System.out.println("+++++++++++" + port);
         User user = userService.findUserById(1);
+        String encrypt = stringEncryptor.encrypt("root");
+        System.err.println(encrypt);
         return user;
     }
 
@@ -118,5 +126,19 @@ public class HelloAction {
                 "&lang=zh_CN";
         JSONObject userInfo = AuthUtils.doGetJson(infoUrl);
         System.err.println(userInfo);
+    }
+
+    /**
+     * 测试RestTemplate获得的乱码问题
+     * @return
+     */
+    @GetMapping("/resttemplate")
+    public String testRestTemplate(){
+        RestTemplate restTemplate = new RestTemplate();
+        //加上下面一行解决中文乱码问题，因为RestTemplate()中默认添加的StringHttpMessageConverter的编码格式是ISO-8859-1
+        restTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
+        String forObject = restTemplate.getForObject("http://www.baidu.com", String.class);
+        System.err.println("-------------"+forObject);
+        return forObject;
     }
 }
