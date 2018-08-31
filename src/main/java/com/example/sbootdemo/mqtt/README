@@ -1,0 +1,4 @@
+1、mqtt在本项目中包含5个部分：MqttConfig、MqttService、HelloAction.mqttTest()、配置文件中的参数、pom.xml中的三个依赖
+2、由于配置文件中的参数是编造的，并非实际数据，故有两个地方的注解被注释了。实际使用中需要取消这两个注释，
+分别是：MqttConfig中的@Configuration，MqttService中的@Autowired
+3、可以结合google浏览器应用商城中的MQTTLens插件查看演示效果

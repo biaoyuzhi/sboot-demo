@@ -1,6 +1,7 @@
 package com.example.sbootdemo.web;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.sbootdemo.mqtt.MqttService;
 import com.example.sbootdemo.pojo.User;
 import com.example.sbootdemo.service.QueueService;
 import com.example.sbootdemo.service.TestService;
@@ -39,6 +40,8 @@ public class HelloAction {
     private TestService testService;
     @Autowired
     private StringEncryptor stringEncryptor;
+    @Autowired
+    private MqttService mqttService;
 
     @GetMapping("/hello")
     public User index() {
@@ -107,7 +110,6 @@ public class HelloAction {
                 "&state=STATE#wechat_redirect";
         response.sendRedirect(url);
     }
-
     @GetMapping("/callBack")
     public void callBack(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //第二步：用code换取access_token
@@ -140,5 +142,13 @@ public class HelloAction {
         String forObject = restTemplate.getForObject("http://www.baidu.com", String.class);
         System.err.println("-------------"+forObject);
         return forObject;
+    }
+
+    /**
+     * mqtt发布端发布信息测试
+     */
+    @GetMapping("/mqtt")
+    public void mqttTest(){
+        mqttService.pubMsgToTopic("666666666","bibi");
     }
 }
