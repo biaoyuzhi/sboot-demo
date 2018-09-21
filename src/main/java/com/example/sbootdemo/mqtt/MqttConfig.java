@@ -21,7 +21,7 @@ import org.springframework.messaging.MessageHandler;
  * Created by wuzh on 2018/8/31.
  * mqtt的配置类，定义了发布端和消费端的bean
  */
-//@Configuration
+@Configuration
 @ConfigurationProperties(prefix = "spring.rabbitmq.mqtt")
 @Data
 public class MqttConfig {
