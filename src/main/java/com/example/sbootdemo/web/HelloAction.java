@@ -11,6 +11,7 @@ import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  * User: DHC
@@ -151,4 +153,22 @@ public class HelloAction {
     public void mqttTest(){
         mqttService.pubMsgToTopic("666666666","bibi");
     }
+
+    /**
+     * 事务测试
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/trans")
+    public String transactionalTest(){
+        String test;
+        try {
+//            userService.transactionalTest();
+            test = userService.translogicTest();
+        } catch (Exception e) {
+            return "fail!!";
+        }
+        return "success!!"+test;
+    }
+
 }
