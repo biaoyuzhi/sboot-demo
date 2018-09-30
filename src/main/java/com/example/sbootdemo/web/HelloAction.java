@@ -12,7 +12,7 @@ import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
-import java.util.List;
 
 /**
  * User: DHC
@@ -185,4 +184,13 @@ public class HelloAction {
         return id1+",,,"+id;
     }
 
+
+    /**
+     * MD5测试,能加密不能解密，Spring自带的DigestUtils，加密出来是32字节的。适合作为其他加密算法的key值
+     */
+    @GetMapping("/md5")
+    public void md5Test(){
+        String hex = DigestUtils.md5DigestAsHex("654321".getBytes());
+        System.err.println(hex+"-----------length:"+hex.length());
+    }
 }

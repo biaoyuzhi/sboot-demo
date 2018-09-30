@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
  */
 @Service
 public class MqttService {
-//    @Autowired
+    @Autowired
     MessageChannel mqttOutboundChannel;
 
     /**
