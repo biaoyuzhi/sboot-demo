@@ -1,7 +1,9 @@
 package com.example.sbootdemo.service;
 
 import com.example.sbootdemo.common.Cache;
+import com.example.sbootdemo.mapper.PersonMapper;
 import com.example.sbootdemo.mapper.UserMapper;
+import com.example.sbootdemo.pojo.Person;
 import com.example.sbootdemo.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private PersonMapper personMapper;
+
     public User findUserById(int id){
         User user = null;
         try {
@@ -43,5 +48,14 @@ public class UserService {
         System.err.println(cache);
         int i = 2/0;
         return Cache.removeCache("a").toString();
+    }
+
+    /**
+     * 测试一个SQL语句
+     * @param person
+     * @return
+     */
+    public Long getIdTest(Person person){
+        return personMapper.addPerson(person);
     }
 }

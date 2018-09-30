@@ -2,6 +2,7 @@ package com.example.sbootdemo.web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.sbootdemo.mqtt.MqttService;
+import com.example.sbootdemo.pojo.Person;
 import com.example.sbootdemo.pojo.User;
 import com.example.sbootdemo.service.QueueService;
 import com.example.sbootdemo.service.TestService;
@@ -169,6 +170,19 @@ public class HelloAction {
             return "fail!!";
         }
         return "success!!"+test;
+    }
+
+    /**
+     * 测试一个SQl语句的效果
+     * @return
+     */
+    @GetMapping("/sql")
+    public String sqlTest(){
+        Person person = new Person("qq", "123");
+        //返回值id是影响行数，最新的id值在下面操作最后已经在对象person.id中了
+        Long id = userService.getIdTest(person);
+        Long id1 = person.getId();
+        return id1+",,,"+id;
     }
 
 }
