@@ -19,10 +19,12 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  * User: DHC
@@ -193,4 +195,57 @@ public class HelloAction {
         String hex = DigestUtils.md5DigestAsHex("654321".getBytes());
         System.err.println(hex+"-----------length:"+hex.length());
     }
+
+    /**
+     * 将多个文件合并到一个新文件里去，注意下面第三个文件的内容是有顺序的，与Vector的添加顺序有关
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/file")
+    public String fileMergeTest() throws Exception {
+        File file1 = new File("F:\\1.txt");
+        File file2 = new File("F:\\2.txt");
+        System.err.println(file1.length());
+        System.err.println(file2.length());
+        InputStream is1 = new FileInputStream(file1);
+        InputStream is2 = new FileInputStream(file2);
+        Vector<InputStream> v = new Vector<InputStream>();
+        v.add(is1);
+        v.add(is2);
+
+        Enumeration<InputStream> en = v.elements();
+        SequenceInputStream sis = new SequenceInputStream(en);
+
+        //目的地
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("F:\\3.txt"));
+        byte[] bytes = new byte[1024];
+        int len;
+        while ((len = sis.read(bytes))!=-1){
+            bos.write(bytes,0,len);
+        }
+        bos.close();
+        sis.close();
+        return "success!!";
+    }
+
+    /**
+     * 将一个文件的内容拆分成若干个固定字节大小，便于后续操作（此处打印在控制台）
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/split")
+    public String fileSplitTest() throws Exception {
+        File file = new File("F:\\2.txt");
+        FileInputStream is = new FileInputStream(file);
+        int i;
+        byte[] bytes = new byte[500];
+        while ((i = is.read(bytes)) != -1) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream(500);
+            baos.write(bytes, 0, i);
+            String aaa = baos.toString();
+            System.err.println(aaa+"##########");
+        }
+        return "success!!";
+    }
+
 }
