@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.sbootdemo.mqtt.MqttService;
 import com.example.sbootdemo.pojo.Person;
 import com.example.sbootdemo.pojo.User;
+import com.example.sbootdemo.service.NewsCrawler;
 import com.example.sbootdemo.service.QueueService;
 import com.example.sbootdemo.service.TestService;
 import com.example.sbootdemo.service.UserService;
@@ -20,6 +21,8 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
@@ -235,8 +238,15 @@ public class HelloAction {
      */
     @GetMapping("/split")
     public String fileSplitTest() throws Exception {
-        File file = new File("F:\\2.txt");
-        FileInputStream is = new FileInputStream(file);
+        //公网上的文件
+        URL url = new URL("https://routerupgrade-3caretec.oss-cn-hangzhou.aliyuncs.com/liteupgrade/user1.4096.new.6.bin");
+        URLConnection connection = url.openConnection();
+        InputStream is = connection.getInputStream();
+        System.out.println(connection.getContentLength()+"--------------文件包含字节数---------------");
+        //本地文件
+//        File file = new File("F:\\1.txt");
+//        FileInputStream is = new FileInputStream(file);
+
         int i;
         byte[] bytes = new byte[500];
         while ((i = is.read(bytes)) != -1) {
@@ -246,6 +256,22 @@ public class HelloAction {
             System.err.println(aaa+"##########");
         }
         return "success!!";
+    }
+
+    /**
+     * 网络爬虫测试接口
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/crawler")
+    public String crawlerTest() throws Exception {
+        NewsCrawler crawler = new NewsCrawler("crawl", true);
+        crawler.setThreads(5);
+        crawler.getConf().setTopN(10);
+        //crawler.setResumable(true);//设置是否为断点爬取，默认为false
+        /*start crawl with depth of 4*/
+        crawler.start(2);
+        return "success";
     }
 
 }
