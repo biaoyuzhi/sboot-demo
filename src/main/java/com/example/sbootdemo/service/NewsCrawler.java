@@ -6,7 +6,7 @@ import cn.edu.hfut.dmic.webcollector.plugin.berkeley.BreadthCrawler;
 
 /**
  * Crawling news from hfut news
- *
+ * BreadthCrawler是WebCollector最常用的爬取器之一，基于文件系统的广度遍历爬虫
  * @author hu
  */
 public class NewsCrawler extends BreadthCrawler {
@@ -25,7 +25,7 @@ public class NewsCrawler extends BreadthCrawler {
         /*fetch url like http://news.hfut.edu.cn/show-xxxxxxhtml*/
         addRegex("http://finance.sina.com.cn/zl/.*shtml");
         /*do not fetch jpg|png|gif*/
-        addRegex("-.*\\.(jpg|png|gif).*");
+        addRegex("-.*\\.(jpg|png|gif).*");//正例正则以+开头，反例正则以-开头（如果前面不加符号，默认是正例正则)
         /*do not fetch url contains #*/
         addRegex("-.*#.*");
     }
