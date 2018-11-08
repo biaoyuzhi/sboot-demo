@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -21,9 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
 import java.util.Enumeration;
@@ -62,12 +61,12 @@ public class HelloAction {
     @GetMapping("/add")
     public void add() {
         //测试数据库中的sex字段为tinyint类型，这里将String类型的sex属性插入数据库，运行正常
-        testService.add(2,"1");
+        testService.add(2, "1");
     }
 
     @GetMapping("/getQueue")
-    public void getQueue(){
-        new Thread("wuzh"){
+    public void getQueue() {
+        new Thread("wuzh") {
             @Override
             public void run() {
                 synchronized (HelloAction.class) {
@@ -83,7 +82,7 @@ public class HelloAction {
             }
         }.start();
 
-        new Thread("hh"){
+        new Thread("hh") {
             @Override
             public void run() {
                 synchronized (HelloAction.class) {
@@ -117,6 +116,7 @@ public class HelloAction {
                 "&state=STATE#wechat_redirect";
         response.sendRedirect(url);
     }
+
     @GetMapping("/callBack")
     public void callBack(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //第二步：用code换取access_token
@@ -139,15 +139,16 @@ public class HelloAction {
 
     /**
      * 测试RestTemplate获得的乱码问题
+     *
      * @return
      */
     @GetMapping("/resttemplate")
-    public String testRestTemplate(){
+    public String testRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         //加上下面一行解决中文乱码问题，因为RestTemplate()中默认添加的StringHttpMessageConverter的编码格式是ISO-8859-1
         restTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
         String forObject = restTemplate.getForObject("http://www.baidu.com", String.class);
-        System.err.println("-------------"+forObject);
+        System.err.println("-------------" + forObject);
         return forObject;
     }
 
@@ -155,17 +156,18 @@ public class HelloAction {
      * mqtt发布端发布信息测试
      */
     @GetMapping("/mqtt")
-    public void mqttTest(){
-        mqttService.pubMsgToTopic("666666666","bibi");
+    public void mqttTest() {
+        mqttService.pubMsgToTopic("666666666", "bibi");
     }
 
     /**
      * 事务测试
+     *
      * @return
      * @throws Exception
      */
     @GetMapping("/trans")
-    public String transactionalTest(){
+    public String transactionalTest() {
         String test;
         try {
 //            userService.transactionalTest();
@@ -173,20 +175,21 @@ public class HelloAction {
         } catch (Exception e) {
             return "fail!!";
         }
-        return "success!!"+test;
+        return "success!!" + test;
     }
 
     /**
      * 测试一个SQl语句的效果
+     *
      * @return
      */
     @GetMapping("/sql")
-    public String sqlTest(){
+    public String sqlTest() {
         Person person = new Person("qq", "123");
         //返回值id是影响行数，最新的id值在下面操作最后已经在对象person.id中了
         Long id = userService.getIdTest(person);
         Long id1 = person.getId();
-        return id1+",,,"+id;
+        return id1 + ",,," + id;
     }
 
 
@@ -194,13 +197,14 @@ public class HelloAction {
      * MD5测试,能加密不能解密，Spring自带的DigestUtils，加密出来是32字节的。适合作为其他加密算法的key值
      */
     @GetMapping("/md5")
-    public void md5Test(){
+    public void md5Test() {
         String hex = DigestUtils.md5DigestAsHex("654321".getBytes());
-        System.err.println(hex+"-----------length:"+hex.length());
+        System.err.println(hex + "-----------length:" + hex.length());
     }
 
     /**
      * 将多个文件合并到一个新文件里去，注意下面第三个文件的内容是有顺序的，与Vector的添加顺序有关
+     *
      * @return
      * @throws Exception
      */
@@ -223,8 +227,8 @@ public class HelloAction {
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("F:\\3.txt"));
         byte[] bytes = new byte[1024];
         int len;
-        while ((len = sis.read(bytes))!=-1){
-            bos.write(bytes,0,len);
+        while ((len = sis.read(bytes)) != -1) {
+            bos.write(bytes, 0, len);
         }
         bos.close();
         sis.close();
@@ -233,6 +237,7 @@ public class HelloAction {
 
     /**
      * 将一个文件的内容拆分成若干个固定字节大小，便于后续操作（此处打印在控制台）
+     *
      * @return
      * @throws Exception
      */
@@ -242,7 +247,7 @@ public class HelloAction {
         URL url = new URL("https://routerupgrade-3caretec.oss-cn-hangzhou.aliyuncs.com/liteupgrade/user1.4096.new.6.bin");
         URLConnection connection = url.openConnection();
         InputStream is = connection.getInputStream();
-        System.out.println(connection.getContentLength()+"--------------文件包含字节数---------------");
+        System.out.println(connection.getContentLength() + "--------------文件包含字节数---------------");
         //本地文件
 //        File file = new File("F:\\1.txt");
 //        FileInputStream is = new FileInputStream(file);
@@ -253,13 +258,14 @@ public class HelloAction {
             ByteArrayOutputStream baos = new ByteArrayOutputStream(500);
             baos.write(bytes, 0, i);
             String aaa = baos.toString();
-            System.err.println(aaa+"##########");
+            System.err.println(aaa + "##########");
         }
         return "success!!";
     }
 
     /**
      * 网络爬虫测试接口
+     *
      * @return
      * @throws Exception
      */
@@ -272,6 +278,48 @@ public class HelloAction {
         /*start crawl with depth of 4*/
         crawler.start(2);
         return "success";
+    }
+
+    /**
+     * 如果该接口放在公网域名中被访问，返回值是访问者的公网ip
+     *
+     * @param request
+     * @return
+     */
+    @GetMapping("/getip")
+    public String getPublicIp(HttpServletRequest request) {
+        String ip;
+        // 处理代理情况
+        ip = request.getHeader("x-forwarded-for");
+        if (StringUtils.isEmpty(ip)
+                || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (StringUtils.isEmpty(ip)
+                || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (StringUtils.isEmpty(ip)
+                || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+            if (ip.equals("127.0.0.1")) {
+                InetAddress inet = null;// 根据网卡取本机配置的IP
+                try {
+                    inet = InetAddress.getLocalHost();//idea-PC/192.168.212.144
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                ip = inet.getHostAddress();//192.168.212.144
+            }
+        }
+        // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割,多级代理的时候会得到多个以,分割的ip，
+        //这时候第一个是真实的客户端ip
+        if (ip != null && ip.length() > 15) { // "***.***.***.***".length()
+            if (ip.indexOf(",") > 0) {
+                ip = ip.substring(0, ip.indexOf(","));
+            }
+        }
+        return ip;
     }
 
 }
