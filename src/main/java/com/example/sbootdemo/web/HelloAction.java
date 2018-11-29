@@ -1,6 +1,7 @@
 package com.example.sbootdemo.web;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.sbootdemo.common.Cache;
 import com.example.sbootdemo.mqtt.MqttService;
 import com.example.sbootdemo.pojo.Person;
 import com.example.sbootdemo.pojo.User;
@@ -320,6 +321,28 @@ public class HelloAction {
             }
         }
         return ip;
+    }
+
+    /**
+     * 测试对Cache中的同一对象进行wait和赋值后再notify操作的可行性
+     * notify的实现在定时任务ScheduledTask类中
+     *
+     * @return  等待30秒，如果超时未被赋值，响应的user的name和password均为null，否则name和password为被赋予的值。测试结果为是可行的。
+     */
+    @GetMapping("/wait")
+    public String waitAndNotifyTest() throws InterruptedException {
+        User user = User.builder().id(1).build();
+        Cache.putCache("wait",user);
+        synchronized (user){
+            long remaining = 30*1000;
+            long future = System.currentTimeMillis()+remaining;
+            while (user.getName()==null&&remaining>0){
+                user.wait(remaining);
+                remaining = future-System.currentTimeMillis();
+            }
+            Cache.removeCache("wait");
+        }
+        return user.toString();
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.sbootdemo.task;
 
+import com.example.sbootdemo.common.Cache;
+import com.example.sbootdemo.pojo.User;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -19,5 +21,14 @@ public class ScheduledTask {
     @Scheduled(cron = "0 */1 * * * ?")
     public void execute(){
         System.err.println(LocalTime.now() +":定时任务开始了。。。");
+        Object obj =  Cache.getCache("wait");
+        if (null!=obj){
+            User wait = (User) obj;
+            synchronized (wait){
+                wait.setName("liu");
+                wait.setPassword("321");
+                wait.notify();
+            }
+        }
     }
 }
