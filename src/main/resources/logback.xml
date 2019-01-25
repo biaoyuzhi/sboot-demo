@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="false" scan="true" scanPeriod="30 minutes">
+    <!--定义日志存放的根目录，可以用绝对路径或相对路径-->
+    <property name="logDir" value="log/" />
+
+    <!-- 打印到控制台 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--下面设置将日志信息保存到文件中，根据日志等级不同，保存到不同的文件中，日志超过指定大小后进行打包压缩-->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤器，只记录INFO级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--要拦截的日志级别-->
+            <level>INFO</level>
+            <!--如果匹配，则允许记录-->
+            <onMatch>ACCEPT</onMatch>
+            <!--如果不匹配，则禁止-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <File>log/info.log</File><!-- 设置日志不超过maxFileSize时的保存路径，注意如果 是web项目会保存到Tomcat的bin目录 下 -->
+        <!-- 最常用的滚动策略，它根据时间来制定滚动策略.既负责滚动也负责出发滚动 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志输出位置  可相对、和绝对路径 -->
+            <fileNamePattern>${logDir}/%d{yyyy-MM}/info-%d{yyyy-MM-dd-HH}-%i.log.gz</fileNamePattern>
+            <!-- 限制文件最大保存时间为15天; 15*24=360 -->
+            <maxHistory>360</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 当文件大小超过60M时触发滚动,即执行上面的打包压缩策略,这里设置60M -->
+                <maxFileSize>60MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level-%logger{5} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤器，只记录WARN级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--要拦截的日志级别-->
+            <level>WARN</level>
+            <!--如果匹配，则允许记录-->
+            <onMatch>ACCEPT</onMatch>
+            <!--如果不匹配，则禁止-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <File>log/warn.log</File><!-- 设置日志不超过maxFileSize时的保存路径，注意如果 是web项目会保存到Tomcat的bin目录 下 -->
+        <!-- 最常用的滚动策略，它根据时间来制定滚动策略.既负责滚动也负责出发滚动 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志输出位置  可相对、和绝对路径 -->
+            <fileNamePattern>${logDir}/%d{yyyy-MM}/warn-%d{yyyy-MM-dd-HH}-%i.log.gz</fileNamePattern>
+            <!-- 限制文件最大保存时间为15天; 15*24=360 -->
+            <maxHistory>360</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 当文件大小超过60M时触发滚动,即执行上面的打包压缩策略,这里设置60M -->
+                <maxFileSize>60MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level-%logger{5} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤器，只记录ERROR级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--要拦截的日志级别-->
+            <level>ERROR</level>
+            <!--如果匹配，则允许记录-->
+            <onMatch>ACCEPT</onMatch>
+            <!--如果不匹配，则禁止-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <File>log/error.log</File><!-- 设置日志不超过maxFileSize时的保存路径，注意如果 是web项目会保存到Tomcat的bin目录 下 -->
+        <!-- 最常用的滚动策略，它根据时间来制定滚动策略.既负责滚动也负责出发滚动 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志输出位置  可相对、和绝对路径 -->
+            <fileNamePattern>${logDir}/%d{yyyy-MM}/error-%d{yyyy-MM-dd-HH}-%i.log.gz</fileNamePattern>
+            <!-- 限制文件最大保存时间为360天; 15*24=360 -->
+            <maxHistory>24</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 当文件大小超过60M时触发滚动,即执行上面的打包压缩策略,这里设置60M -->
+                <maxFileSize>60MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level-%logger{5} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- SQL相关日志输出-->
+    <logger name="org.apache.ibatis" level="INFO" additivity="false" />
+    <logger name="org.mybatis.spring" level="INFO" additivity="false" />
+    <logger name="com.github.miemiedev.mybatis.paginator" level="INFO" additivity="false" />
+
+    <!-- Logger 根目录 -->
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="ERROR"/>
+    </root>
+
+</configuration>

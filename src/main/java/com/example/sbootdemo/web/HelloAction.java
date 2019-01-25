@@ -11,6 +11,8 @@ import com.example.sbootdemo.service.TestService;
 import com.example.sbootdemo.service.UserService;
 import com.example.sbootdemo.util.AuthUtils;
 import org.jasypt.encryption.StringEncryptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -343,6 +345,19 @@ public class HelloAction {
             Cache.removeCache("wait");
         }
         return user.toString();
+    }
+
+    /**
+     * 测试日志文件的打印
+     *
+     */
+    private static Logger logger = LoggerFactory.getLogger(HelloAction.class);
+    @GetMapping("/log")
+    public String logTest(){
+        logger.info("#######INFO########");
+        logger.error("#######ERROR########");
+        logger.warn("#######WARN########");
+        return "success";
     }
 
 }
