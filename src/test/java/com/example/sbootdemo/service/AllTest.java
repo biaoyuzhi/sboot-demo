@@ -1,5 +1,6 @@
 package com.example.sbootdemo.service;
 
+import com.example.sbootdemo.util.CommonUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,7 +11,12 @@ public class AllTest {
 
     @Test
     public void visit() throws Exception {
-        System.out.println("test is ok!");
+        double balance = CommonUtils.rmbCent2Round(100, 91);
+        if (balance<0) {
+            System.out.println("余额不足");
+        }else {
+            System.out.println(balance);
+        }
     }
 
 }
