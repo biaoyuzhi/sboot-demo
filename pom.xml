@@ -109,19 +109,36 @@
 
 	<build>
 		<plugins>
+			<!--springboot自带的打包插件-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>8</source>
-					<target>8</target>
-				</configuration>
-			</plugin>
+			<!--自定义的普通maven打包，打出的jar包可以导入其他项目中被正常引用-->
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-compiler-plugin</artifactId>-->
+				<!--<configuration>-->
+					<!--<source>8</source>-->
+					<!--<target>8</target>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
 		</plugins>
+		<!--如果有特殊处理，可以引入下面的resources配置，否则可以去掉下面配置-->
+		<!--<resources>-->
+			<!--<resource>-->
+				<!--&lt;!&ndash;指定打包时，需要特殊处理的文件&ndash;&gt;-->
+				<!--<directory>src/main/resources</directory>-->
+				<!--&lt;!&ndash;处理文件时，需要对文件进行变量替换&ndash;&gt;-->
+				<!--<filtering>true</filtering>-->
+				<!--&lt;!&ndash;指定打包时，不要包含这些文件&ndash;&gt;-->
+				<!--<excludes>-->
+					<!--<exclude>init.sql</exclude>-->
+					<!--<exclude>logback.xml</exclude>-->
+					<!--<exclude>README</exclude>-->
+				<!--</excludes>-->
+			<!--</resource>-->
+		<!--</resources>-->
 	</build>
 
 
