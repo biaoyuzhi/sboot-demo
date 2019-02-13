@@ -360,4 +360,26 @@ public class HelloAction {
         return "success";
     }
 
+    /**
+     * 测试java项目中引入.py文件，并获取python文件的执行结果。
+     * 注意点：1、运行本java项目的机器上安装python环境。2、将编写好的python文件放到java项目的某一个包中。3、python环境具有python文件引用的所有模块(包括第三方模块)
+     *
+     */
+    @GetMapping("/python")
+    public String pythonTest() throws Exception{
+        String projectPath = System.getProperty("user.dir"); //获得项目路径
+        Process process = Runtime.getRuntime().exec("F:\\PyCharmWorkSpace\\venv\\Scripts\\python.exe "+projectPath+"/src/main/java/python/test.py");// 本机的python运行环境 & 即将要调用的py文件
+        BufferedReader in = new BufferedReader(new
+                InputStreamReader(process.getInputStream(),"gbk")); //设置编码方式，否则输出中文时容易乱码
+        String line;
+        StringBuilder str = new StringBuilder();
+        while ((line = in.readLine()) != null) {
+            System.err.println(line);
+            str.append(line);
+        }
+        in.close();
+        process.waitFor();
+        return String.valueOf(str);
+    }
+
 }

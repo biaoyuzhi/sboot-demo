@@ -1,0 +1,7 @@
+dataBase:
+  host: localhost
+  user: root
+  password: root
+  db: web1
+  charset: utf8
+  port: 3306

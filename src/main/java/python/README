@@ -1,0 +1,7 @@
+本package只放python文件，用于实现java项目中引入python操作的执行结果。
+该包下文件能被正常执行需要注意以下几点：
+1、运行本java项目的机器上安装了python环境。
+2、将编写好的python文件放到本java项目的某一个包中。
+3、python环境具有python文件引用的所有模块(包括第三方模块)
+
+本test.py文件中实现了python代码调用本地数据库的操作和python内置模块的一些直接操作结果的打印
