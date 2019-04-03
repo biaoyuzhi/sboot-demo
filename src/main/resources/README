@@ -1,14 +1,37 @@
-//logback.xml日志相关说明
-默认情况下，Spring Boot将日志输出到控制台，不会写到日志文件。
-使用 Spring Boot 喜欢在 application.properties 或 application.yml 配置，这样只能配置简单的场景，保存路径、日志格式等，
-复杂的场景（区分 info 和 error 的日志、每天产生一个日志文件等）满足不了，只能自定义配置logback.xml文件。
-
-spring-boot-starter-web中带spring-boot-starter自带spring-boot-starter-logging带logback。
-springBoot框架默认已经集成logback日志系统，
+//logback.xml日志相关说明------------------------------------------------------------------------
+默认情况下，SpringBoot将日志输出到控制台，不会写到日志文件中。想要实现将日志信息写到文件中有两种方法：
+1、在application.properties或application.yml等配置文件中直接指明，但这样只能配置简单的参数，如：保存路径、日志格式等，
+复杂的场景（区分info和error的日志、每天产生一个日志文件等）满足不了
+2、自定义配置文件logback.xml
+springBoot框架默认已经集成了logback日志系统(spring-boot-starter-web依赖中含spring-boot-starter依赖，而spring-boot-starter依赖下又含spring-boot-starter-logging依赖，最终含logback依赖)，
 使用方法为在resources包下创建一个logback.xml文件，命名最好不要改。
-如果改了名称需在application.yml配置文件中声明，例如：logging.config=classpath:logging-config.xml
+如果改了名称需在application.yml配置文件中声明，如：logging.config=classpath:logging-config.xml
 
 代码中日志类的定义和引入如下：
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 private static Logger logger = LoggerFactory.getLogger(HelloAction.class);
+
+//定时任务相关说明-------------------------------------------------------------------------------
+1、启动类上加@EnableScheduling注解，开启定时功能
+2、编写定时任务类如：ScheduledTask，类上加注解@Component，方法上加注解@Scheduled(cron = "0 */1 * * * ?")
+3、该定时任务功能是SpringBoot自带的，无需引入其它框架或依赖包
+4、SpringBoot的定时任务默认由一个容量大小为10的线程池来处理，每一个定时任务类或者定时任务方法在执行时都直接从线程池里取一个线程来执行相关操作
+
+//java项目中引入.py文件，并获取python文件的执行结果的相关说明------------------------------------
+1、运行本java项目的机器上需已经安装python环境
+2、将编写好的python文件放到java项目的某一个包中，如：/java/python
+3、python环境具有python文件中引用的所有模块(包括第三方模块)，如：PyYAML==3.12，PyMySQL==0.9.2
+
+//SpringBoot框架中引入.html页面，并且访问html页面说明---------------------------------------------
+1、pox.xml中引入依赖：
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+2、resources/templates包下创建html页面，如：index.html
+3、创建Controller类，类上加注解@Controller，注意：不能加@ResponseBody功能，类下的方法上也不能加@ResponseBody注解
+4、Controller类中创建方法，方法上可以加访问地址注解，如：@RequestMapping(value = "/index", method = {RequestMethod.POST, RequestMethod.GET})，
+方法的返回值中直接写需要跳转的页面的名称(不带.html)，如：return "index";
+
+//
