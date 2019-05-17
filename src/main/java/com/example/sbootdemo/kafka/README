@@ -1,0 +1,8 @@
+kafka在本项目中只需要2个部分：
+1、pom.xml中添加依赖：
+    <dependency>
+		<groupId>org.apache.kafka</groupId>
+		<artifactId>kafka-clients</artifactId>
+		<version>0.11.0.0</version>
+	</dependency>
+2、编写消费端类com.example.sbootdemo.kafka.KafkaConsumerDemo.java
