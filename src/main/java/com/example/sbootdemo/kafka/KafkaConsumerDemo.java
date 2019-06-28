@@ -27,8 +27,7 @@ public class KafkaConsumerDemo {
         while (true){                                               //循环监听
             ConsumerRecords<String, String> records = consumer.poll(100);   //弹出超时时间
             for (ConsumerRecord<String, String> record : records) {
-                System.out.printf("偏移量 = %d, 取得值 = %s", record.offset(), record.value());   //这个打印方式值得借鉴，但是它不带换行
-                System.out.println();
+                System.out.printf("偏移量 = %d, 取得值 = %s\n", record.offset(), record.value());   //这个打印方式值得借鉴，但是它不带换行
             }
         }
     }
