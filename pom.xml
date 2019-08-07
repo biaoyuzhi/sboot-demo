@@ -112,6 +112,12 @@
 			<version>0.11.0.0</version>
 		</dependency>
 
+		<!--SSH连接远程linux机器的依赖，用于实现运行远程机器shell脚本命令-->
+		<dependency>
+			<groupId>org.jvnet.hudson</groupId>
+			<artifactId>ganymed-ssh2</artifactId>
+			<version>build210-hudson-1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
