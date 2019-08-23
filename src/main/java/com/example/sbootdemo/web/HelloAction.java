@@ -267,6 +267,29 @@ public class HelloAction {
     }
 
     /**
+     * 将服务器端的文件下载到客户端本地上
+     *
+     * @return
+     */
+    @GetMapping("/download")
+    public void downloadToLocal(HttpServletResponse resp) throws Exception{
+        //服务器端需要被下载的文件路径
+        String serverFile = "F:/aa.txt";
+
+        InputStream is = new FileInputStream(new File(serverFile));
+        resp.setCharacterEncoding("UTF-8");
+        resp.setHeader("Content-disposition", "attachment; filename=" + serverFile.substring(serverFile.lastIndexOf("/") + 1)); // 设定输出文件头
+        OutputStream bos = resp.getOutputStream();
+        byte[] bytes = new byte[1024];
+        int len;
+        while ((len = is.read(bytes)) != -1) {
+            bos.write(bytes, 0, len);
+        }
+        is.close();
+        bos.close();
+    }
+
+    /**
      * 网络爬虫测试接口
      *
      * @return
