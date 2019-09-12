@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>首页</title>
+</head>
+<body>
+    欢迎打开首页!
+    <div id="content"></div>
+    <!--页面通过Model取值-->
+    <!--<div th:each="obj,objStat:${data}">-->
+        <!--<p th:text="${objStat.count}"></p>-->
+        <!--<p th:text="${obj}"></p>-->
+    <!--</div>-->
+</body>
+<!--引入D3.js-->
+<script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+<!--js通过model取值-->
+<script th:inline="javascript">
+    <!--var data = [[${data}]];-->
+    var data = [10,23,65,16,97,32]
+    console.log(data);
+    var svg = d3.select("#content").append("svg").attr("width",400).attr("height",400)
+    <!--g.append("path").data(data)-->
+    <!--画x/y坐标图-->
+    var xScale = d3.scaleLinear().domain([0,20]).range([0,300])
+    var yScale = d3.scaleBand().domain(["星期三","星期二","星期一"]).range([0,300])
+    var xAxis = d3.axisBottom().scale(xScale)                          //定义一个x坐标轴，axisTop时数字位于水平线上侧，axisBottom时数字位于水平线下侧
+    var yAxis = d3.axisLeft().scale(yScale)                            //定义一个y坐标轴，axisLeft时数字位于垂直线左侧，axisRight时数字位于垂直线右侧。
+    svg.append("g").attr("transform","translate(50,350)").call(xAxis)
+    svg.append("g").attr("transform","translate(50,50)").call(yAxis)
+</script>
+</html>
