@@ -1,3 +1,5 @@
+//JDK11抛异常--Error:java: java.lang.ExceptionInInitializerError。JDK8正常
+
 //logback.xml日志相关说明------------------------------------------------------------------------
 默认情况下，SpringBoot将日志输出到控制台，不会写到日志文件中。想要实现将日志信息写到文件中有两种方法：
 1、在application.properties或application.yml等配置文件中直接指明，但这样只能配置简单的参数，如：保存路径、日志格式等，
@@ -42,5 +44,3 @@ private static Logger logger = LoggerFactory.getLogger(HelloAction.class);
 		<version>0.11.0.0</version>
 	</dependency>
 2、编写消费端类com.example.sbootdemo.kafka.KafkaConsumerDemo.java
-
-//
