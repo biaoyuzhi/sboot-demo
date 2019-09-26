@@ -1,5 +1,8 @@
 package com.example.sbootdemo.util;
 
+import java.io.File;
+import java.util.Scanner;
+
 /**
  * 各种常见方法的归类，作为通用工具类
  * <p>
@@ -33,5 +36,33 @@ public class CommonUtils {
         return balance;
     }
 
+    //java代码模拟DOS下的tree命令
+    public static void tree(){
+        Scanner cin = new Scanner(System.in);
+        String path = cin.nextLine();
+        File dir = new File(path);
+        dfs(dir);
+    }
+    private static int depth = 0;
+    private static void dfs(File parentDir) {
+        depth++;
+        if (parentDir.isDirectory()) {
+            print(parentDir);
+            File[] fileArr = parentDir.listFiles();
+            for (File f : fileArr) {
+                dfs(f);
+            }
+        }
+        if (parentDir.isFile()) {
+            print(parentDir);
+        }
+        depth--;
+    }
+    private static void print(File f) {
+        for (int i = 1; i < depth; i++) {
+            System.out.print("   ");
+        }
+        System.out.println("|--" + f.getName());
+    }
 
 }

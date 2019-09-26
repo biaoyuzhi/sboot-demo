@@ -44,3 +44,7 @@ private static Logger logger = LoggerFactory.getLogger(HelloAction.class);
 		<version>0.11.0.0</version>
 	</dependency>
 2、编写消费端类com.example.sbootdemo.kafka.KafkaConsumerDemo.java
+
+//自定义注解在本项目中涉及的部分---------------------------------------------------------------------
+com.example.sbootdemo.iterceptor包下的：NeedLogin类自定义了注解，LoginFilter类解析了自定义注解
+com.example.sbootdemo.web.HtmlAction类的loginIndex方法引入了自定义注解
