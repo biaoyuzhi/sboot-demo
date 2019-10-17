@@ -1,4 +1,4 @@
-package com.example.sbootdemo.iterceptor;
+package com.example.sbootdemo.interceptor;
 
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by wuzh on 2019/9/26.
- * Describe：自定义拦截器LoginFilter，需要实现HandlerInterceptor接口
+ * Describe：自定义拦截器LoginInterceptor，需要实现HandlerInterceptor接口
  * 此处实现对自定义注解@NeedLogin的使用
  */
-public class LoginFilter implements HandlerInterceptor {
+public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod)) {

@@ -1,6 +1,6 @@
 package com.example.sbootdemo.web;
 
-import com.example.sbootdemo.iterceptor.NeedLogin;
+import com.example.sbootdemo.interceptor.NeedLogin;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,0 +1,6 @@
+该包下三个类主要实现自定义注解的定义和使用，同时也实现了自定义拦截器的使用
+
+NeedLogin类自定义了注解，LoginInterceptor类解析了自定义注解并且自定义了拦截器，LoginConfig类注册了自定义拦截器
+com.example.sbootdemo.web.HtmlAction类的loginIndex方法引入了自定义注解
+
+拦截器和过滤器的区别，参考：https://www.cnblogs.com/panxuejun/p/7715917.html

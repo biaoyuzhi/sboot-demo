@@ -1,4 +1,4 @@
-package com.example.sbootdemo.iterceptor;
+package com.example.sbootdemo.interceptor;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -13,6 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class LoginConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginFilter());
+        registry.addInterceptor(new LoginInterceptor());
     }
 }

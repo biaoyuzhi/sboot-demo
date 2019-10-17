@@ -1,4 +1,4 @@
-package com.example.sbootdemo.iterceptor;
+package com.example.sbootdemo.interceptor;
 
 
 import java.lang.annotation.ElementType;
