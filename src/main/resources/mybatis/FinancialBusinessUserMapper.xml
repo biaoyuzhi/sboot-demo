@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.sbootdemo.dao.FinancialBusinessUserMapper" >
+  <resultMap id="BaseResultMap" type="com.example.sbootdemo.pojo.FinancialBusinessUser" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="network_ip" property="networkIp" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="question1" property="question1" jdbcType="VARCHAR" />
+    <result column="question2" property="question2" jdbcType="VARCHAR" />
+    <result column="question3" property="question3" jdbcType="VARCHAR" />
+    <result column="question4" property="question4" jdbcType="VARCHAR" />
+    <result column="question5" property="question5" jdbcType="VARCHAR" />
+    <result column="question6" property="question6" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, network_ip, name, sex, age, city, question1, question2, question3, question4, 
+    question5, question6, result, is_deleted, create_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.sbootdemo.pojo.FinancialBusinessUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from financial_business_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from financial_business_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from financial_business_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.sbootdemo.pojo.FinancialBusinessUserExample" >
+    delete from financial_business_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.sbootdemo.pojo.FinancialBusinessUser" >
+    insert into financial_business_user (id, network_ip, name, 
+      sex, age, city, question1, 
+      question2, question3, question4, 
+      question5, question6, result, 
+      is_deleted, create_date)
+    values (#{id,jdbcType=BIGINT}, #{networkIp,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{age,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{question1,jdbcType=VARCHAR}, 
+      #{question2,jdbcType=VARCHAR}, #{question3,jdbcType=VARCHAR}, #{question4,jdbcType=VARCHAR}, 
+      #{question5,jdbcType=VARCHAR}, #{question6,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=TINYINT}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.sbootdemo.pojo.FinancialBusinessUser" >
+    insert into financial_business_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="networkIp != null" >
+        network_ip,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="question1 != null" >
+        question1,
+      </if>
+      <if test="question2 != null" >
+        question2,
+      </if>
+      <if test="question3 != null" >
+        question3,
+      </if>
+      <if test="question4 != null" >
+        question4,
+      </if>
+      <if test="question5 != null" >
+        question5,
+      </if>
+      <if test="question6 != null" >
+        question6,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="networkIp != null" >
+        #{networkIp,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="question1 != null" >
+        #{question1,jdbcType=VARCHAR},
+      </if>
+      <if test="question2 != null" >
+        #{question2,jdbcType=VARCHAR},
+      </if>
+      <if test="question3 != null" >
+        #{question3,jdbcType=VARCHAR},
+      </if>
+      <if test="question4 != null" >
+        #{question4,jdbcType=VARCHAR},
+      </if>
+      <if test="question5 != null" >
+        #{question5,jdbcType=VARCHAR},
+      </if>
+      <if test="question6 != null" >
+        #{question6,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.sbootdemo.pojo.FinancialBusinessUserExample" resultType="java.lang.Integer" >
+    select count(*) from financial_business_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update financial_business_user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.networkIp != null" >
+        network_ip = #{record.networkIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.question1 != null" >
+        question1 = #{record.question1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.question2 != null" >
+        question2 = #{record.question2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.question3 != null" >
+        question3 = #{record.question3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.question4 != null" >
+        question4 = #{record.question4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.question5 != null" >
+        question5 = #{record.question5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.question6 != null" >
+        question6 = #{record.question6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.result != null" >
+        result = #{record.result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDeleted != null" >
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update financial_business_user
+    set id = #{record.id,jdbcType=BIGINT},
+      network_ip = #{record.networkIp,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      question1 = #{record.question1,jdbcType=VARCHAR},
+      question2 = #{record.question2,jdbcType=VARCHAR},
+      question3 = #{record.question3,jdbcType=VARCHAR},
+      question4 = #{record.question4,jdbcType=VARCHAR},
+      question5 = #{record.question5,jdbcType=VARCHAR},
+      question6 = #{record.question6,jdbcType=VARCHAR},
+      result = #{record.result,jdbcType=VARCHAR},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.sbootdemo.pojo.FinancialBusinessUser" >
+    update financial_business_user
+    <set >
+      <if test="networkIp != null" >
+        network_ip = #{networkIp,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="question1 != null" >
+        question1 = #{question1,jdbcType=VARCHAR},
+      </if>
+      <if test="question2 != null" >
+        question2 = #{question2,jdbcType=VARCHAR},
+      </if>
+      <if test="question3 != null" >
+        question3 = #{question3,jdbcType=VARCHAR},
+      </if>
+      <if test="question4 != null" >
+        question4 = #{question4,jdbcType=VARCHAR},
+      </if>
+      <if test="question5 != null" >
+        question5 = #{question5,jdbcType=VARCHAR},
+      </if>
+      <if test="question6 != null" >
+        question6 = #{question6,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sbootdemo.pojo.FinancialBusinessUser" >
+    update financial_business_user
+    set network_ip = #{networkIp,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      question1 = #{question1,jdbcType=VARCHAR},
+      question2 = #{question2,jdbcType=VARCHAR},
+      question3 = #{question3,jdbcType=VARCHAR},
+      question4 = #{question4,jdbcType=VARCHAR},
+      question5 = #{question5,jdbcType=VARCHAR},
+      question6 = #{question6,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

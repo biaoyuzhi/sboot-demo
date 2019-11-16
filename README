@@ -1,0 +1,9 @@
+SpringBoot框架 + MyBatis
+使用MyBatis Generator自动生成插件，注意的地方：
+1、pom.xml中添加mybatis-generator-core依赖和mybatis-generator-maven-plugin插件，插件中需要指定配置文件generator.xml的路径
+2、application.yml中添加mybatis.mapper-locations配置，指明运行时与xxxMapper相关的xml文件路径
+3、generator.xml为代码自动生成主要配置文件
+4、生成步骤，IDEA的侧边框中：Maven Project -> Plugins -> mybatis-generator
+5、生成的xxxMapper接口需要添加@Mapper注解
+
+该项目中，User表不加入自动生成，UserMapper接口中使用@Select等注解替代UserMapper.xml文件，可知注解可以达到xml文件同等的效果
