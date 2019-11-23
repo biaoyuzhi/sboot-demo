@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>登陆页面</title>
+</head>
+<body>
+<!--  action写明访问接口url，method写明访问接口形式get或post，onsubmit可以阻止表单提交，用于实现表单验证  -->
+    <form action="/login" method="post" onsubmit="return check()">
+<!--    下面的input各项需保证name中的名称和pojo中的User对象的各个属性名称一一对应    -->
+        用户名：<input type="text" name="name" /><br/>
+        密 码：<input type="text" name="password"/><br/>
+        <input type="submit" value="注册" />
+    </form>
+</body>
+<!--引用jQuery，可以是在线的路径，也可以是项目中static/js包中的路径-->
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script type="text/javascript">
+    // 下面这行在{}中实现一些函数等操作，会在DOM树的绘制完毕后即加载，用于实现每次打开页面第一时间自动加载一些事务
+    $(function () {})
+    // 下面函数用于定义上面引用了的check()函数
+    function check(){
+        if($("input[name='name']").val() == ""){
+            alert("用户名不能为空");
+            return false;
+        }
+        if($("input[name='password']").val() == ""){
+            alert("密码不能为空");
+            return false;
+        }
+        return true;
+    }
+</script>
+</html>
