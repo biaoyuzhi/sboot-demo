@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>登陆页面</title>
+</head>
+<body>
+<!--  action设置为空，因为表单的提交交给<script>中的ajax实现，<form>标签中提交相关设置删除  -->
+    <form id="myForm" action="">
+<!--    下面的input各项需保证name中的名称和pojo中的User对象的各个属性名称一一对应    -->
+        用户名：<input type="text" name="userName" /><br/>
+        密 码：<input type="text" name="password"/><br/>
+        邮 箱：<input type="text" name="email"/><br/>
+        手机号：<input type="text" name="phone"/><br/>
+<!--    这个提交标签type使用button，不使用submit，因为表单的提交交给ajax实现。onclick设置提交事件    -->
+        <input type="button" value="注册" onclick="check()"/>
+    </form>
+</body>
+<!--引用jQuery，可以是在线的路径，也可以是项目中static/js包中的路径-->
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+<script type="text/javascript">
+    // 下面这行在{}中实现一些函数等操作，会在DOM树的绘制完毕后即加载，用于实现每次打开页面第一时间自动加载一些事务。这里没有使用相关功能
+    $(function () {})
+
+    // 下面函数用于定义上面引用了的check()函数
+    function check(){
+        // 表单中各个输入框内容的验证
+        if($("input[name='userName']").val() == ""){
+            alert("用户名不能为空");
+            return;
+        }
+        if($("input[name='password']").val() == ""){
+            alert("密码不能为空");
+            return;
+        }
+        if($("input[name='email']").val() == ""){
+            alert("邮箱不能为空");
+            return;
+        }
+        if($("input[name='phone']").val() == ""){
+            alert("联系方式不能为空");
+            return;
+        }
+        // 上面表单验证通过后执行下面ajax向后端提交数据
+        $.ajax({
+            type: "POST",       //方法类型
+            dataType: "json",   //预期服务器返回的数据类型
+            url: "/login" ,     //url
+            data: $("#myForm").serialize(), //获取id为myForm的标签的序列化数据
+            success: function (result) {    //后端成功响应的回调函数
+                console.log(result);        //打印后端返回的数据(调试用)
+                if (result.flag == 1) {     //判断后端json中键为flag的值
+                    //如果flag=1表示登录成功，下面实现页面跳转
+                    window.location.href = "/welcome"; //这里需要定位到后端的某个接口。因为resources/templates路径下面html文件只有后端能够访问
+                }
+                if (result.flag == 0) {
+                    //如果flag=0表示登录失败，则页面不跳转
+                    alert("登录失败");       //跳出提示框(调试用)
+                }
+            },
+            error : function() {            //后端响应失败的回调函数
+                alert("异常！");
+            }
+        });
+    }
+</script>
+</html>

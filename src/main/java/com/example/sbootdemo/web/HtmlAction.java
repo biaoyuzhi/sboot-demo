@@ -22,7 +22,7 @@ public class HtmlAction {
     }
 
     @NeedLogin
-    @GetMapping("/login")
+    @GetMapping("/loginIndex")
     public String loginIndex(Model model){
         int[] data = {10,23,65,16,97,32};
         model.addAttribute("data",data);
