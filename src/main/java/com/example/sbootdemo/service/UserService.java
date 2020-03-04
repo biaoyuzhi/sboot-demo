@@ -58,4 +58,7 @@ public class UserService {
     public Long getIdTest(Person person){
         return personMapper.addPerson(person);
     }
+    public void addOrUpdateUserTest(User user){
+        userMapper.addOrUpdateUser(user);
+    }
 }

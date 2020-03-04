@@ -188,6 +188,7 @@ public class HelloAction {
      */
     @GetMapping("/sql")
     public String sqlTest() {
+        userService.addOrUpdateUserTest(new User(3,"zzz","123"));
         Person person = new Person("qq", "123");
         //返回值id是影响行数，最新的id值在下面操作最后已经在对象person.id中了
         Long id = userService.getIdTest(person);
