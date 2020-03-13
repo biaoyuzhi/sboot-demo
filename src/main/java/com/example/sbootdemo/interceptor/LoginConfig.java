@@ -24,6 +24,7 @@ public class LoginConfig extends WebMvcConfigurerAdapter {
 //        String[] split = filterUrls.split(",");
 //        List<String> urls = Arrays.asList(split);
         // 3、调用排除在拦截器之外路径的方法excludePathPatterns(List)
+        // 支持正则表达式：/api/v1/user/**      如果接口抛异常了，会进入/error接口，所以可以考虑将/error接口加入排除url集合中
 //        registry.addInterceptor(new LoginInterceptor()).excludePathPatterns(urls);
     }
 }
