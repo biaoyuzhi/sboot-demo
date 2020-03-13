@@ -11,8 +11,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 public class LoginConfig extends WebMvcConfigurerAdapter {
+    // 1、读取application.yml中的相应配置信息
+//    @Value("${filter.urls}")
+//    private String filterUrls;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
         registry.addInterceptor(new LoginInterceptor());
+
+        // 2、将不需要经过拦截器的url放入集合中
+//        String[] split = filterUrls.split(",");
+//        List<String> urls = Arrays.asList(split);
+        // 3、调用排除在拦截器之外路径的方法excludePathPatterns(List)
+//        registry.addInterceptor(new LoginInterceptor()).excludePathPatterns(urls);
     }
 }
