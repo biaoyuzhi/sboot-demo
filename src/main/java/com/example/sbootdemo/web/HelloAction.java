@@ -175,6 +175,7 @@ public class HelloAction {
         try {
 //            userService.transactionalTest();
             test = userService.translogicTest();
+//            userService.transactionalDiffTableTest();
         } catch (Exception e) {
             return "fail!!";
         }

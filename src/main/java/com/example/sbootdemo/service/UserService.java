@@ -38,6 +38,17 @@ public class UserService {
     }
 
     /**
+     * 此处数据库事务是成功的，对不同表的操作，可以放在同一个事务中。
+     * @throws Exception
+     */
+    @Transactional
+    public void transactionalDiffTableTest() throws Exception{
+        userMapper.modifyUser("1","666");
+        int i = 2/0;
+        personMapper.addPerson(new Person("zzz", "zzz"));
+    }
+
+    /**
      * 此处测试逻辑上的事务，测试事务是不起作用的。因为下面每行代码可能是一个原子操作，但是整个逻辑不在一个原子操作中，所以无回滚、无事务可言。
      * @throws Exception
      */
