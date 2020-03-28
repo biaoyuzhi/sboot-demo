@@ -1,11 +1,10 @@
 package com.example.sbootdemo.mapper;
 
 import com.example.sbootdemo.pojo.Person;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.StatementType;
+
+import java.util.List;
 
 /**
  * Created by wuzh on 2018/9/25.
@@ -16,4 +15,8 @@ public interface PersonMapper {
     @Insert("insert into person(name,password) values(#{person.name},#{person.password})")
     @SelectKey(statement="select LAST_INSERT_ID()", keyProperty="person.id", before=false, statementType= StatementType.STATEMENT,resultType=Long.class)
     Long addPerson(@Param("person") Person person);
+
+    // 使用注解方式调用底层的存储过程
+    @Select("call proc_findPerson(#{name})")
+    List<Person> findCallByName(@Param("name") String name);
 }

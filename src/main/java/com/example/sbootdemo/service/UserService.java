@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class UserService {
     @Autowired
@@ -71,5 +73,13 @@ public class UserService {
     }
     public void addOrUpdateUserTest(User user){
         userMapper.addOrUpdateUser(user);
+    }
+
+    public void findCallByName(String name) {
+        List<Person> callByName = personMapper.findCallByName(name);
+        for (Person person : callByName) {
+            System.out.println(person);
+        }
+
     }
 }

@@ -197,6 +197,13 @@ public class HelloAction {
         return id1 + ",,," + id;
     }
 
+    /** 测试使用mybatis的注解方式调用存储过程 **/
+    @GetMapping("/call")
+    public String callTest(){
+        userService.findCallByName("wuzh");
+        return "success";
+    }
+
 
     /**
      * MD5测试,能加密不能解密，Spring自带的DigestUtils，加密出来是32字节的。适合作为其他加密算法的key值
