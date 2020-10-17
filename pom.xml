@@ -119,6 +119,14 @@
 			<version>build210-hudson-1</version>
 		</dependency>
 
+		<!-- apache的ftp操作 -->
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>1.4.1</version>
+		</dependency>
+
+
 		<!--添加前端页面模块依赖thymeleaf-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

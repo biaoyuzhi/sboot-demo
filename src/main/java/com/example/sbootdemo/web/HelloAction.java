@@ -10,6 +10,7 @@ import com.example.sbootdemo.service.QueueService;
 import com.example.sbootdemo.service.TestService;
 import com.example.sbootdemo.service.UserService;
 import com.example.sbootdemo.util.AuthUtils;
+import com.example.sbootdemo.util.FtpUtils;
 import org.jasypt.encryption.StringEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,9 +105,6 @@ public class HelloAction {
 
     /**
      * 微信公众号授权登入逻辑下面2个接口：/wxLogin和/callBack，外加一个工具类AuthUtils
-     *
-     * @param response
-     * @throws IOException
      */
     @GetMapping("/wxLogin")
     public void login(HttpServletResponse response) throws IOException {
@@ -142,8 +140,6 @@ public class HelloAction {
 
     /**
      * 测试RestTemplate获得的乱码问题
-     *
-     * @return
      */
     @GetMapping("/resttemplate")
     public String testRestTemplate() {
@@ -165,9 +161,6 @@ public class HelloAction {
 
     /**
      * 事务测试
-     *
-     * @return
-     * @throws Exception
      */
     @GetMapping("/trans")
     public String transactionalTest() {
@@ -184,8 +177,6 @@ public class HelloAction {
 
     /**
      * 测试一个SQl语句的效果
-     *
-     * @return
      */
     @GetMapping("/sql")
     public String sqlTest() {
@@ -216,9 +207,6 @@ public class HelloAction {
 
     /**
      * 将多个文件合并到一个新文件里去，注意下面第三个文件的内容是有顺序的，与Vector的添加顺序有关
-     *
-     * @return
-     * @throws Exception
      */
     @GetMapping("/file")
     public String fileMergeTest() throws Exception {
@@ -249,9 +237,6 @@ public class HelloAction {
 
     /**
      * 将一个文件的内容拆分成若干个固定字节大小，便于后续操作（此处打印在控制台）
-     *
-     * @return
-     * @throws Exception
      */
     @GetMapping("/split")
     public String fileSplitTest() throws Exception {
@@ -277,8 +262,6 @@ public class HelloAction {
 
     /**
      * 将服务器端的文件下载到客户端本地上
-     *
-     * @return
      */
     @GetMapping("/download")
     public void downloadToLocal(HttpServletResponse resp) throws Exception{
@@ -300,9 +283,6 @@ public class HelloAction {
 
     /**
      * 网络爬虫测试接口
-     *
-     * @return
-     * @throws Exception
      */
     @GetMapping("/crawler")
     public String crawlerTest() throws Exception {
@@ -317,9 +297,6 @@ public class HelloAction {
 
     /**
      * 如果该接口放在公网域名中被访问，返回值是访问者的公网ip
-     *
-     * @param request
-     * @return
      */
     @GetMapping("/getip")
     public String getPublicIp(HttpServletRequest request) {
@@ -381,7 +358,6 @@ public class HelloAction {
 
     /**
      * 测试日志文件的打印
-     *
      */
     private static Logger logger = LoggerFactory.getLogger(HelloAction.class);
     @GetMapping("/log")
@@ -395,7 +371,6 @@ public class HelloAction {
     /**
      * 测试java项目中引入.py文件，并获取python文件的执行结果。
      * 注意点：1、运行本java项目的机器上安装python环境。2、将编写好的python文件放到java项目的某一个包中。3、python环境具有python文件引用的所有模块(包括第三方模块)
-     *
      */
     @GetMapping("/python")
     public String pythonTest() throws Exception{
@@ -412,6 +387,15 @@ public class HelloAction {
         in.close();
         process.waitFor();
         return String.valueOf(str);
+    }
+
+    /**
+     * Ftp测试
+     */
+    @GetMapping("/ftp")
+    public void ftpTest() {
+        FtpUtils.upload("D:/xx.zip.part");
+        FtpUtils.closeFtp();
     }
 
 }
