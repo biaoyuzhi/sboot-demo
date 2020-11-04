@@ -42,6 +42,7 @@ public class FtpUtils {
     private static void initFtp() {
         try {
             ftpClient.setControlEncoding("utf-8");
+            ftpClient.setRemoteVerificationEnabled(false);  //ftp关闭远程校验
             ftpClient.connect(hostname, port);          //连接ftp服务器
             ftpClient.login(username, password);        //登录ftp服务器
             int replyCode = ftpClient.getReplyCode();   //是否成功登录服务器
@@ -74,8 +75,9 @@ public class FtpUtils {
      * ftp上传文件
      *
      * @param fileName 需要上传的文件名。eg：xxx.zip.part
+     * @param partName 上传到ftp的文件名
      */
-    public static void upload(String fileName) {
+    public static void upload(String fileName, String partName) throws Exception {
         if (!ftpClient.isConnected()) {
             initFtp();
         }
@@ -87,7 +89,7 @@ public class FtpUtils {
             String zipName = fileName.substring(0, fileName.lastIndexOf("."));
             ftpClient.rename(fileName, zipName);
         } catch (IOException ex) {
-            logger.error("[upload] ftp upload fail!", ex);
+            throw ex;
         } finally {
             if (fis != null) {
                 try {
