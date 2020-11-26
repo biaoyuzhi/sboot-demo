@@ -41,8 +41,6 @@ public class FtpUtils {
      */
     private static void initFtp() {
         try {
-            ftpClient.setControlEncoding("utf-8");
-            ftpClient.setRemoteVerificationEnabled(false);  //ftp关闭远程校验
             ftpClient.connect(hostname, port);          //连接ftp服务器
             ftpClient.login(username, password);        //登录ftp服务器
             int replyCode = ftpClient.getReplyCode();   //是否成功登录服务器
@@ -50,6 +48,10 @@ public class FtpUtils {
                 logger.error("[initFtp] connect ftp server failed...:" + hostname + ":" + port);
                 ftpClient.disconnect();
             }
+            ftpClient.setControlEncoding("utf-8");
+            ftpClient.enterLocalPassiveMode();  //设置为被动模式(如上传文件夹成功，不能上传文件，注释这行，否则报错refused:connect)
+            ftpClient.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);    //设置传输方式为流方式，不设置linux环境上传文件可能异常
+            ftpClient.setRemoteVerificationEnabled(false);  //ftp关闭远程校验
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);    //设置文件类型，不设置解压时提示文件损坏
             ftpClient.changeWorkingDirectory(workPath);     //进入指定路径
         } catch (IOException ex) {
